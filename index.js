@@ -1,15 +1,16 @@
 const express = require('express')
 const cors = require('cors')
 const nodemailer = require('nodemailer')
+const port = process.env.PORT || 80
 require('dotenv').config()
 const app = express()
 
 app.use(cors({
-  origin: '*',
+  origin: 'https://pdill.dev',
   credentials: true
 }))
 app.use(express.json())
-app.listen(5000, () => console.log('Server running on port 5000'))
+app.listen(port, () => console.log(`Server running on port ${port}`))
 
 app.route('/contact')
   .post((request, response) => {
@@ -26,7 +27,7 @@ app.route('/contact')
     }
     const smtpConfig = {
       host: process.env.HOST,
-      port: 587,
+      port: process.env.SMTP_PORT,
       secure: false,
       auth: {
         user: process.env.EMAIL_USER,
